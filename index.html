@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Rede Pensando Rápido: demonstração de cuidado assistivo e rotina compartilhada.">
+  <title>Rede Pensando Rápido | Demonstração Assistiva</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <script>document.documentElement.setAttribute('data-bs-theme', localStorage.getItem('rpr-theme') === 'dark' ? 'dark' : 'light');</script>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Pular para o conteúdo</a>
+  <div id="app">
+    <header class="topbar shadow-sm">
+      <div class="container-fluid px-lg-4 d-flex align-items-center justify-content-between gap-2">
+        <a href="#inicio" class="brand d-flex align-items-center text-decoration-none" aria-label="Rede Pensando Rápido, início">
+          <svg class="brand-mark" viewBox="0 0 64 64" role="img" aria-label="Escudo de cuidado e conexão">
+            <path d="M32 4 55 14v17c0 15-9.5 24-23 30C18.5 55 9 46 9 31V14L32 4Z" fill="#0F2C59" stroke="#E6C79C" stroke-width="2"/>
+            <path d="M17 33h9l4-10 6 18 4-8h7" fill="none" stroke="#F5EFE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="46" cy="18" r="8" fill="#006D77" stroke="#F5EFE6" stroke-width="2"/><path d="M46 13v5l3 2" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <span class="brand-text">Rede <strong>Pensando Rápido</strong><small>Cuidado conectado</small></span>
+        </a>
+        <div class="d-flex gap-2 align-items-center">
+          <span class="demo-label d-none d-md-inline"><i class="bi bi-circle-fill me-1"></i> AMBIENTE DEMONSTRATIVO</span>
+          <button id="themeToggle" class="btn btn-outline-brand" aria-label="Alternar tema claro e escuro" title="Alternar tema"><i class="bi bi-moon-stars"></i></button>
+          <button id="logoutBtn" class="btn btn-outline-brand d-none" type="button"><i class="bi bi-box-arrow-right me-1"></i>Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section id="authScreen" class="container auth-layout py-5">
+        <div class="auth-intro">
+          <div class="eyebrow">TECNOLOGIA PARA O CUIDADO COTIDIANO</div>
+          <h1>Mais tranquilidade para quem cuida. <span>Mais autonomia para quem vive.</span></h1>
+          <p>Uma experiência demonstrativa de lembretes, acompanhamento de localização e comunicação em situações de atenção — tudo em um só lugar.</p>
+          <div class="feature-row"><i class="bi bi-shield-check"></i><span>Dados fictícios, sem ligação com dispositivos ou serviços reais</span></div>
+          <div class="feature-row"><i class="bi bi-heart-pulse"></i><span>Interface acessível, botões claros e ações de um toque</span></div>
+          <div class="feature-row"><i class="bi bi-geo-alt"></i><span>Visualização de rede de apoio e cerca virtual simulada</span></div>
+          <div class="auth-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-center"><i class="bi bi-heart-pulse-fill"></i></div><div class="orbit-dot dot-one"><i class="bi bi-smartwatch"></i></div><div class="orbit-dot dot-two"><i class="bi bi-geo-alt-fill"></i></div><div class="orbit-dot dot-three"><i class="bi bi-people-fill"></i></div></div>
+        </div>
+        <div class="auth-card panel p-4 p-lg-5">
+          <div class="eyebrow">BEM-VINDO(A)</div><h2 class="h3 fw-bold mb-2">Acesse a plataforma</h2>
+          <p class="muted mb-4">Explore os recursos interativos do projeto.</p>
+          <ul class="nav nav-pills nav-fill mb-4 auth-tabs" id="authTabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link active" id="login-tab" data-bs-toggle="pill" data-bs-target="#login-pane" type="button" role="tab" aria-controls="login-pane" aria-selected="true">Entrar</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="register-tab" data-bs-toggle="pill" data-bs-target="#register-pane" type="button" role="tab" aria-controls="register-pane" aria-selected="false">Criar conta</button></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="login-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+              <form id="loginForm" class="vstack gap-3">
+                <div><label class="form-label" for="loginEmail">E-mail</label><input class="form-control form-control-lg" id="loginEmail" type="email" required autocomplete="username" placeholder="voce@exemplo.com"></div>
+                <div><label class="form-label" for="loginPassword">Senha</label><input class="form-control form-control-lg" id="loginPassword" type="password" required autocomplete="current-password" placeholder="Sua senha"></div>
+                <button type="submit" class="btn btn-brand btn-lg">Entrar na plataforma <i class="bi bi-arrow-right ms-2"></i></button>
+                <button id="adminQuickBtn" class="btn btn-outline-brand" type="button"><i class="bi bi-person-gear me-1"></i> Entrar como Admin Demo</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="register-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+              <form id="registerForm" class="vstack gap-3">
+                <div><label class="form-label" for="registerName">Nome completo</label><input class="form-control" id="registerName" minlength="2" maxlength="80" required autocomplete="name"></div>
+                <div><label class="form-label" for="registerEmail">E-mail</label><input class="form-control" id="registerEmail" type="email" required autocomplete="email"></div>
+                <div><label class="form-label" for="registerRole">Perfil</label><select class="form-select" id="registerRole" required><option value="cuidador">Familiar cuidador</option><option value="profissional">Profissional de saúde</option></select></div>
+                <div><label class="form-label" for="registerPassword">Senha (mínimo de 8 caracteres)</label><input class="form-control" id="registerPassword" type="password" minlength="8" required autocomplete="new-password"></div>
+                <button type="submit" class="btn btn-brand btn-lg">Criar conta de demonstração</button>
+              </form>
+            </div>
+          </div>
+          <p class="small muted mt-4 mb-0"><i class="bi bi-info-circle me-1"></i> Login demonstrativo local ao navegador; não utilize senhas pessoais.</p>
+        </div>
+      </section>
+
+      <div id="workspace" class="d-none">
+        <div class="container-fluid px-lg-4 workspace-shell">
+          <aside class="sidebar" aria-label="Menu da plataforma">
+            <div class="sidebar-label">MENU PRINCIPAL</div>
+            <nav class="nav flex-column gap-1" id="mainNav">
+              <button class="nav-link active" data-page="dashboard"><i class="bi bi-grid-1x2"></i> Visão geral</button>
+              <button class="nav-link" data-page="watch"><i class="bi bi-smartwatch"></i> Smartwatch</button>
+              <button class="nav-link" data-page="map"><i class="bi bi-geo-alt"></i> Mapa e cerca virtual</button>
+              <button class="nav-link" data-page="reports"><i class="bi bi-clipboard2-pulse"></i> Relatórios</button>
+              <button class="nav-link d-none" id="adminNav" data-page="admin"><i class="bi bi-gear"></i> Gestão da plataforma</button>
+            </nav>
+            <div class="sidebar-bottom"><div class="small muted mb-1">PESSOA ACOMPANHADA</div><div class="fw-bold">Maria Oliveira <span class="badge status-safe">Demo</span></div><div class="small muted">DEMO-IDOSO-001</div><hr><div id="sideUser" class="small"></div></div>
+          </aside>
+          <div class="workspace-main">
+            <div class="page-title-row"><div><div class="eyebrow">CENTRAL DE ACOMPANHAMENTO</div><h1 id="pageTitle" class="h2 fw-bold mb-1">Visão geral</h1><div class="muted" id="pageSubtitle">Uma visão clara da rotina e dos alertas.</div></div><span class="badge status-safe p-2"><i class="bi bi-broadcast me-1"></i> Simulação ativa</span></div>
+            <section id="dashboardPage" class="app-page" aria-label="Visão geral">
+              <div class="row g-3 mb-4" id="kpiGrid"></div>
+              <div class="row g-3 mb-4">
+                <div class="col-xl-7"><div class="panel p-4 h-100"><div class="section-head"><div><span class="eyebrow">AÇÕES RÁPIDAS</span><h2 class="h5 fw-bold mt-1">Cuidar é estar presente</h2></div><span class="badge status-safe">GPS Ativo</span></div><p class="muted">Acione recursos de demonstração e acompanhe o resultado no relógio ao lado.</p><div class="action-grid"><button class="btn btn-brand action-btn" data-action="medication"><i class="bi bi-capsule"></i><span>Enviar sinal de medicação</span></button><button class="btn btn-outline-brand action-btn" data-action="call"><i class="bi bi-telephone"></i><span>Ligar para o smartwatch</span></button><button class="btn btn-outline-alert action-btn" data-action="sos"><i class="bi bi-exclamation-triangle"></i><span>Simular SOS</span></button><button class="btn btn-outline-brand action-btn" data-action="alerts"><i class="bi bi-bell"></i><span>Teste de notificações</span></button></div></div></div>
+                <div class="col-xl-5"><div class="panel p-3 watch-preview"><div class="d-flex justify-content-between align-items-center px-2"><div><span class="eyebrow">DISPOSITIVO CONECTADO</span><h2 class="h5 mt-1 fw-bold">Smartwatch ao vivo</h2></div><span class="small muted">SIMULADO</span></div><div id="watchDashboard"></div></div></div>
+              </div>
+              <div class="row g-3 mb-4"><div class="col-lg-7"><div class="panel p-4"><div class="section-head"><h2 class="h5 fw-bold">Medicação na semana</h2><span class="small muted">Confirmações diárias</span></div><div class="chart-wrap"><canvas id="medChart" role="img" aria-label="Gráfico de barras de lembretes confirmados por dia"></canvas></div></div></div><div class="col-lg-5"><div class="panel p-4"><div class="section-head"><h2 class="h5 fw-bold">Eventos da semana</h2></div><div class="chart-wrap"><canvas id="eventChart" role="img" aria-label="Gráfico de rosca com tipos de eventos"></canvas></div></div></div></div>
+              <div class="row g-3"><div class="col-lg-7"><div class="panel p-4"><div class="section-head"><h2 class="h5 fw-bold">Histórico recente</h2><button class="btn btn-sm btn-outline-brand" data-page="reports">Ver relatório</button></div><div id="activityList" aria-live="polite"></div></div></div><div class="col-lg-5"><div class="panel p-4"><div class="section-head"><h2 class="h5 fw-bold">Mensagens multicanal</h2><span class="small muted">Somente simulação</span></div><div id="messageList" aria-live="polite"></div></div></div></div>
+            </section>
+            <section id="watchPage" class="app-page d-none" aria-label="Smartwatch"><div class="row g-3"><div class="col-lg-6"><div class="panel p-4"><h2 class="h5 fw-bold">Simulador do relógio</h2><p class="muted">Interaja com a tela para confirmar o lembrete ou use o botão físico SOS.</p><div id="watchFull"></div></div></div><div class="col-lg-6"><div class="panel p-4"><h2 class="h5 fw-bold">Teste as interações</h2><p class="muted">Os dados são atualizados automaticamente em todas as telas.</p><div class="d-grid gap-3"><button class="btn btn-brand btn-lg" data-action="medication"><i class="bi bi-capsule me-2"></i>Enviar sinal de medicação</button><button class="btn btn-outline-brand btn-lg" data-action="call"><i class="bi bi-telephone me-2"></i>Iniciar ligação</button><button class="btn btn-outline-alert btn-lg" data-action="sos"><i class="bi bi-exclamation-triangle me-2"></i>Simular SOS</button></div><hr><div class="small muted">O relógio mostrado é uma interface ilustrativa. Nenhum dispositivo real está conectado.</div></div></div></div></section>
+            <section id="mapPage" class="app-page d-none" aria-label="Mapa e cerca virtual"><div class="row g-3"><div class="col-xl-8"><div class="panel p-3"><div class="section-head px-2 pt-2"><h2 class="h5 fw-bold">Localização e área de segurança</h2><span class="badge status-safe">Jaú • SP</span></div><div id="map" role="application" aria-label="Mapa demonstrativo de Jaú com cerca virtual, posição e pontos de apoio"></div></div></div><div class="col-xl-4"><div class="panel p-4"><h2 class="h5 fw-bold">Controles da simulação</h2><p class="muted">A posição é fictícia e não utiliza o GPS do usuário.</p><label for="fenceRadius" class="form-label fw-semibold">Raio da cerca virtual: <span id="radiusValue">400</span> m</label><input class="form-range" id="fenceRadius" type="range" min="100" max="1500" step="50" value="400"><div class="d-grid gap-2 mt-3"><button class="btn btn-brand" data-action="safeWalk"><i class="bi bi-person-walking me-1"></i> Caminhada segura</button><button class="btn btn-outline-alert" data-action="exitFence"><i class="bi bi-geo-alt me-1"></i> Saída do perímetro (alerta)</button><button class="btn btn-outline-brand" data-action="pharmacy"><i class="bi bi-hospital me-1"></i> Acionar farmácia parceira mais próxima</button></div><div class="alert alert-info mt-3 mb-0 small" role="note"><i class="bi bi-info-circle me-1"></i> Os pontos de apoio são fictícios. Nenhum estabelecimento é contatado.</div></div><div class="panel p-4 mt-3"><h3 class="h6 fw-bold">Estado da localização</h3><div id="geoStatus" aria-live="polite"></div></div></div></div></section>
+            <section id="reportsPage" class="app-page d-none" aria-label="Relatório semanal"><div class="panel p-4"><div class="section-head flex-wrap gap-3"><div><span class="eyebrow">RESUMO DE ROTINA</span><h2 class="h4 fw-bold mt-1">Relatório semanal para consulta</h2></div><div class="d-flex gap-2 flex-wrap"><button id="generateReport" class="btn btn-brand"><i class="bi bi-stars me-1"></i> Gerar resumo semanal com IA</button><button id="printReport" class="btn btn-outline-brand"><i class="bi bi-printer me-1"></i> Imprimir / salvar PDF</button></div></div><div class="alert alert-warning small" role="note"><i class="bi bi-info-circle me-1"></i> A geração utiliza regras locais sobre dados sintéticos. Não há modelo de IA externo nem análise clínica.</div><div id="reportOutput" aria-live="polite" class="report-output"><p class="muted">Selecione “Gerar resumo semanal com IA” para obter um texto estruturado a partir dos dados locais.</p></div><div class="ethics-note mt-4">Aviso Ético e Regulatório: A Rede Pensando Rápido é uma plataforma estritamente assistiva e de organização da rotina. Não realiza diagnóstico médico nem substitui avaliação clínica profissional.</div></div></section>
+            <section id="adminPage" class="app-page d-none" aria-label="Gestão da plataforma"><div id="adminContent"></div></section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer px-3 py-3 text-center small">Aviso Ético e Regulatório: A Rede Pensando Rápido é uma plataforma estritamente assistiva e de organização da rotina. Não realiza diagnóstico médico nem substitui avaliação clínica profissional.<div class="mt-1 opacity-75">Protótipo demonstrativo • Dados sintéticos • Sem integração real com GPS, telefonia, farmácias ou serviços de emergência.</div></footer>
+  </div>
+  <div class="modal fade" id="callModal" tabindex="-1" aria-labelledby="callTitle" aria-modal="true" role="dialog"><div class="modal-dialog modal-dialog-centered"><div class="modal-content call-modal"><div class="modal-header border-0"><h2 class="modal-title h5" id="callTitle">Ligação simulada</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div><div class="modal-body text-center"><div class="call-avatar"><i class="bi bi-smartwatch"></i></div><h3 class="h5 mt-3">Smartwatch de Maria</h3><p id="callStatus" class="muted" role="status">Chamada Viva-Voz Conectada ao Smartwatch</p><div id="callTimer" class="call-timer" aria-live="off">00:00</div><div class="equalizer" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><p class="small muted">Experiência fictícia, sem áudio ou telefonia real.</p><button id="endCallBtn" class="btn btn-danger btn-lg rounded-pill px-4"><i class="bi bi-telephone-x me-2"></i>Encerrar chamada</button></div></div></div></div>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="/assets/js/controllers/AppController.js"></script>
+</body>
+</html>
